@@ -1,12 +1,15 @@
+import sys
+sys.path.append(sys.path[0]+'/..')
 import glob
 import os
 import cv2
 import mmengine
 import numpy as np
 import torch
+from segment_anything import build_sam, SamPredictor, SamAutomaticMaskGenerator
 
 folder = '/Users/kyanchen/datasets/Building/3. The cropped image tiles and raster labels/test'
-from segment_anything import build_sam, SamPredictor, SamAutomaticMaskGenerator
+
 
 n_points = 1
 mode = 'box'  # 'point' or 'box' or 'mask'
