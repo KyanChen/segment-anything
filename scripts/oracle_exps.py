@@ -9,7 +9,8 @@ import torch
 from segment_anything import build_sam, SamPredictor, SamAutomaticMaskGenerator
 
 folder = '/Users/kyanchen/datasets/Building/3. The cropped image tiles and raster labels/test'
-
+checkpoint = '../pretrain/sam_vit_h_4b8939.pth'
+device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
 n_points = 1
 mode = 'box'  # 'point' or 'box' or 'mask'
@@ -20,9 +21,7 @@ save_folder = os.path.join(folder, f'result_{mode}_{n_points}')
 mmengine.mkdir_or_exist(save_folder)
 img_files = glob.glob(os.path.join(img_folder, '*.tif'))
 
-
-checkpoint = '../pretrain/sam_vit_h_4b8939.pth'
-predictor = SamPredictor(build_sam(checkpoint=checkpoint))
+predictor = SamPredictor(build_sam(checkpoint=checkpoint).to(device))
 
 def generate_points_boxes(contours, mask):
     points = []
